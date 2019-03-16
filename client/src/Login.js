@@ -3,6 +3,7 @@ import Title from './Title';
 
 const Login = props => {
   const [input, setInput] = useState('');
+  const [isLoginButtonDisabled, setLoginButtonClickStatus] = useState(false);
 
   return (
     <div className="app">
@@ -19,8 +20,12 @@ const Login = props => {
           <br />
           <button
             type="submit"
-            onClick={() => props.login(input)}
+            onClick={() => {
+              setLoginButtonClickStatus(!isLoginButtonDisabled);
+              props.login(input);
+            }}
             className="login-button"
+            disabled={isLoginButtonDisabled}
           >
             Login
           </button>
