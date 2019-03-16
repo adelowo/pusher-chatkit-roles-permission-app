@@ -99,10 +99,12 @@ class Chat extends Component {
       );
     }
 
+    const showHeader = this.state.currentUser !== null && this.props.isAdmin;
+
     return (
       <div className="app">
         <Title title={''} />
-        {this.state.currentUser !== null && (
+        {showHeader && (
           <Header
             addUserToRoom={this.addUserToRoom}
             removeUserFromRoom={this.deleteUserFromRoom}

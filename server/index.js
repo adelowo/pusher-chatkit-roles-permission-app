@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Chatkit = require('@pusher/chatkit-server');
 
+const ADMIN_ROLE = 'admin';
+
 const app = express();
 
 const chatkit = new Chatkit.default({
@@ -25,14 +27,22 @@ app.post('/users', (req, res) => {
       name: username,
     })
     .then(() => {
-      res.sendStatus(201);
+      res.status(201);
+      res.send({ is_admin: false });
     })
     .catch(err => {
       if (err.error === 'services/chatkit/user_already_exists') {
-        res.sendStatus(200);
-      } else {
-        res.status(err.status).json(err);
+        chatkit.getUserRoles({ userId: username }).then(roles => {
+          const adminRole = roles.find(permission => {
+            return permission.role_name === ADMIN_ROLE;
+          });
+
+          res.status(200).json({ is_admin: adminRole !== undefined });
+        });
+        return;
       }
+
+      res.status(err.status).json(err);
     });
 });
 
@@ -47,4 +57,3 @@ app.set('port', process.env.PORT || 5200);
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running on port ${server.address().port}`);
 });
-

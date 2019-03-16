@@ -7,6 +7,7 @@ import axios from 'axios';
 class App extends React.Component {
   state = {
     username: '',
+    isUserAdmin: false,
   };
 
   logIn = username => {
@@ -18,7 +19,7 @@ class App extends React.Component {
     axios
       .post('http://localhost:5200/users', { username })
       .then(res => {
-        this.setState({ username });
+        this.setState({ username, isUserAdmin: res.data.is_admin });
       })
       .catch(err => {
         console.log(err);
@@ -31,7 +32,9 @@ class App extends React.Component {
       return <Login login={this.logIn} />;
     }
 
-    return <Chat username={this.state.username} />;
+    return (
+      <Chat isAdmin={this.state.isUserAdmin} username={this.state.username} />
+    );
   }
 }
 
