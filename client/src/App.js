@@ -1,63 +1,37 @@
 import React from 'react';
-import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import './App.css';
-import { SendMessageForm, MessageList } from './Message';
-import Title from './Title';
-
-const instanceLocator = 'v1:us1:feaa87a8-804f-48e3-9cb4-2a1d10cca255';
-const roomId = 'ROOM_ID';
-const USER_ID = 'USER_ID';
+import Chat from './Chat';
+import Login from './Login';
+import axios from 'axios';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      messages: [],
-    };
-  }
+  state = {
+    username: '',
+  };
 
-  componentDidMount() {
-    const chatManager = new ChatManager({
-      instanceLocator: instanceLocator,
-      userId: USER_ID,
-      tokenProvider: new TokenProvider({
-        url: 'http://localhost:5200/auth',
-      }),
-    });
+  logIn = username => {
+    if (username.trim().length === 0) {
+      alert('Please provide your username');
+      return;
+    }
 
-    chatManager.connect().then(currentUser => {
-      this.currentUser = currentUser;
-      this.currentUser.subscribeToRoom({
-        roomId: roomId,
-        hooks: {
-          onMessage: message => {
-            this.setState({
-              messages: [...this.state.messages, message],
-            });
-          },
-        },
+    axios
+      .post('http://localhost:5200/users', { username })
+      .then(res => {
+        this.setState({ username });
+      })
+      .catch(err => {
+        console.log(err);
+        alert('We could not log you in');
       });
-    });
-  }
-
-  sendMessage = text => {
-    this.currentUser.sendMessage({
-      text,
-      roomId: roomId,
-    });
   };
 
   render() {
-    return (
-      <div className="app">
-        <Title title={''} />
-        <MessageList
-          roomId={this.state.roomId}
-          messages={this.state.messages}
-        />
-        <SendMessageForm sendMessage={this.sendMessage} />
-      </div>
-    );
+    if (this.state.username === '') {
+      return <Login login={this.logIn} />;
+    }
+
+    return <Chat username={this.state.username} />;
   }
 }
 

@@ -88,7 +88,31 @@ body {
   border-radius: 8px;
 }
 
-.message-list {
+.login-form {
+  padding-top: 15px;
+  padding-bottom: 10%;
+  margin: 5% auto;
+  text-align: center;
+}
+
+input[type='text'] {
+  line-height: 3em;
+  margin: 1em 2em;
+  border-radius: 5px;
+  border: 2px solid #f2f2f2;
+}
+
+button {
+  margin-top: 15px;
+  height: 30px;
+  width: 100px;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: var(--main-color);
+}
+
+.message-list,
+.login-box {
   box-sizing: border-box;
   padding: 0 0 0 6px;
   margin: 0;
