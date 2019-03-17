@@ -5,8 +5,8 @@ import Title from './Title';
 import Popup from './Popup';
 import './App.css';
 
-const instanceLocator = 'v1:us1:feaa87a8-804f-48e3-9cb4-2a1d10cca255';
-const ROOM_ID = '19385842';
+const instanceLocator = 'PUSHER_CHATKIT_INSTANCE_LOCATOR';
+const ROOM_ID = 'PUSHER_ROOM_ID';
 
 class Chat extends Component {
   state = {
