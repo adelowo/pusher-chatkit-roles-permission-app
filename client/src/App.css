@@ -109,9 +109,10 @@ input[type='text'] {
 }
 
 button {
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin-top: 15px;
-  height: 30px;
-  width: 100px;
+  font-size: 1em;
   text-transform: uppercase;
   cursor: pointer;
   background: var(--main-color);
