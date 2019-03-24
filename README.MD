@@ -1,6 +1,6 @@
 # pusher-chatkit-roles-permission-app
 
-Introducing roles and permissions to your chat app built with Pusher Chatkit
+Introducing roles and permissions to your chat app built with Pusher Chatkit... https://pusher.com/tutorials/roles-permissions-react-chat
 
 #### Prerequisites
 
